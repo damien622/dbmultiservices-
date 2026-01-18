@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>DB Multi-Services | Artisan tous travaux</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="DB Multi-Services, artisan tous travaux : rénovation, maçonnerie, peinture, placo et plus. Devis gratuit et intervention rapide.">
+
+<!-- Font Awesome pour les icônes -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* BASE */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    color: #333;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+header {
+    background: #1e3a5f;
+    color: white;
+    padding: 20px 10px;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+header img {
+    max-width: 120px;
+    transition: transform 0.4s ease;
+}
+
+header img:hover {
+    transform: scale(1.15);
+}
+
+header h1 {
+    margin: 10px 0 5px;
+    transition: color 0.3s ease;
+}
+
+.call-btn {
+    display: inline-block;
+    margin-top: 10px;
+    background: #ff9800;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.call-btn:hover {
+    background: #e68a00;
+    transform: scale(1.1);
+}
+
+/* SECTIONS */
+section {
+    padding: 50px 20px;
+    max-width: 1000px;
+    margin: auto;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s ease-out;
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+h2 {
+    color: #1e3a5f;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* CARD FLIP AVEC ICÔNES */
+.services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    perspective: 1000px;
+}
+
+.card {
+    width: 100%;
+    height: 200px;
+    background: transparent;
+    perspective: 1000px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    font-weight: bold;
+}
+
+.card-front {
+    background: #fff;
+    color: #1e3a5f;
+    font-size: 18px;
+    transition: background 0.3s;
+}
+
+.card-front i {
+    font-size: 40px;
+    margin-bottom: 10px;
+    color: #ff9800;
+}
+
+.card-front:hover {
+    background: #e6f0fa;
+}
+
+.card-back {
+    background: #1e3a5f;
+    color: #fff;
+    transform: rotateY(180deg);
+    font-weight: normal;
+    font-size: 14px;
+}
+
+/* FORMULAIRE */
+form {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s;
+}
+
+form:hover {
+    transform: translateY(-5px);
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border 0.3s;
+}
+
+input:focus, textarea:focus {
+    border-color: #1e3a5f;
+    outline: none;
+}
+
+button {
+    background: #1e3a5f;
+    color: white;
+    padding: 14px;
+    border: none;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background: #163056;
+    transform: scale(1.05);
+}
+
+/* FOOTER */
+footer {
+    background: #1e3a5f;
+    color: white;
+    text-align: center;
+    padding: 25px 10px;
+    margin-top: 50px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 22px;
+    }
+    section {
+        padding: 30px 15px;
+    }
+}
+
+/* CSS POUR L’IMPRESSION EN PDF */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+    header, footer {
+        background: #1e3a5f !important;
+        color: white !important;
+    }
+    .card-inner {
+        transform: rotateY(180deg) !important; /* montre le verso des cartes */
+    }
+    .card-front {
+        background: #fff !important;
+        color: #1e3a5f !important;
+    }
+    .card-back {
+        background: #1e3a5f !important;
+        color: white !important;
+    }
+    .call-btn {
+        background: #ff9800 !important;
+        color: white !important;
+        text-decoration: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo.jpg" alt="DB Multi-Services">
+    <h1>DB Multi-Services</h1>
+    <p>Artisan tous travaux – Rénovation & maçonnerie</p>
+    <a class="call-btn" href="tel:0767667181">📞 Appeler maintenant</a>
+</header>
+
+<section>
+    <h2>Présentation</h2>
+    <p>
+        DB Multi-Services est votre artisan de confiance pour tous vos travaux
+        de rénovation intérieure et extérieure. Travail soigné, sérieux et devis gratuit.
+    </p>
+</section>
+
+<section>
+    <h2>Nos services</h2>
+    <div class="services">
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front"><i class="fas fa-tools"></i>Placo</div>
+                <div class="card-back">Pose de cloisons et plafonds avec finition professionnelle.</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front"><i class="fas fa-paint-roller"></i>Peinture</div>
+                <div class="card-back">Peinture intérieure et extérieure avec produits de qualité.</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front"><i class="fas fa-floor-plan"></i>Pose de sol</div>
+                <div class="card-back">Parquet, carrelage, lino et sols stratifiés.</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front"><i class="fas fa-building"></i>Maçonnerie</div>
+                <div class="card-back">Travaux de maçonnerie, rénovation de murs et façades.</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front"><i class="fas fa-scroll"></i>Tapisserie</div>
+                <div class="card-back">Pose de papier peint et décoration murale soignée.</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front"><i class="fas fa-shield-alt"></i>Volets roulants</div>
+                <div class="card-back">Installation et réparation de volets roulants manuels et électriques.</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front"><i class="fas fa-key"></i>Serrurerie</div>
+                <div class="card-back">Installation et dépannage de serrures et verrous sécurisés.</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front"><i class="fas fa-broom"></i>Nettoyage façades & terrasses</div>
+                <div class="card-back">Nettoyage professionnel des façades et terrasses pour un rendu impeccable.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Pourquoi nous choisir ?</h2>
+    <p>
+        ✔ Devis gratuit<br>
+        ✔ Travail propre et soigné<br>
+        ✔ Artisan polyvalent<br>
+        ✔ Intervention rapide
+    </p>
+</section>
+
+<section>
+    <h2>Contact</h2>
+    <form id="contactForm">
+        <input type="text" placeholder="Nom" required>
+        <input type="email" placeholder="Email" required>
+        <input type="tel" placeholder="Téléphone">
+        <textarea rows="5" placeholder="Votre message"></textarea>
+        <button type="submit">Envoyer</button>
+    </form>
+    <p id="formMessage" style="color:green; display:none; text-align:center; margin-top:10px;">
+        Merci ! Votre message a été envoyé.
+    </p>
+</section>
+
+<footer>
+    <p>📞 07 67 66 71 81</p>
+    <p>© DB Multi-Services</p>
+</footer>
+
+<script>
+// Formulaire avec confirmation
+document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('formMessage').style.display = 'block';
+    this.reset();
+});
+
+// Effet fade-in sections
+const sections = document.querySelectorAll('section');
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.2 });
+sections.forEach(section => observer.observe(section));
+
+// Effet cascade sur les cartes
+const cards = document.querySelectorAll('.card');
+const cardObserver = new IntersectionObserver(entries => {
+    entries.forEach((entry, index) => {
+        if(entry.isIntersecting){
+            setTimeout(() => {
+                entry.target.classList.add('visible');
+            }, index * 150);
+        }
+    });
+}, { threshold: 0.2 });
+cards.forEach(card => cardObserver.observe(card));
+</script>
+
+</body>
+</html>
